@@ -1,0 +1,4 @@
+# Frontera: lo que dijo el agente y lo que se ejecutó
+
+1. **Lo que dijo el agente en el paso 4:** cargó dos `CLAUDE.md`, el de `blog/` (REGLA-PADRE) y el de `blog-api`, y ninguno de `blog-ai`; dijo tener disponibles, entre una lista larga de skills de usuario, plugins y de Claude Code, `marcador-blog-api` y `marcador-blog-ai`; y llamó al campo `fragmentos_coincidentes` por la convención de español y snake_case del archivo.
+2. **Lo que encontré en los marcadores:** `MARCADORES-blog-api.txt` tiene una única línea (un `Edit` sobre `blog-ai/app/esquemas.py`) y `MARCADORES-blog-ai.txt` no existe: el hook de `blog-api` se ejecutó sobre un archivo de otro repositorio y el de `blog-ai` no se ejecutó aunque el archivo editado era suyo, lo que indica que un guardarraíl se aplica según la carpeta desde la que se arrancó la sesión y no según dónde está el archivo, y que una skill listada como disponible por el agente no implica que se ejecute su hook.
