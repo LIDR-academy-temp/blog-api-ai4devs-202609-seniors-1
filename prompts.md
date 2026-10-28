@@ -310,3 +310,7 @@ gusrda los prompts aqui: ~/blog/blog-api/prompts.md
 ```
 
 **Qué salió:** con el acceso a blog-api ya permitido, añadió los prompts 5 a 14 a este archivo y las precisiones pendientes a `docs/frontera.md`.
+
+## Pull request
+
+https://github.com/LIDR-academy-temp/blog-api-ai4devs-202609-seniors-1/pull/9
