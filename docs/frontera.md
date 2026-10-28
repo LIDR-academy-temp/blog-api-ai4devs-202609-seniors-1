@@ -1,3 +1,5 @@
+<!-- Este archivo pertenece al repositorio blog-api. -->
+
 Claude informó que reconoció y aplicó ~/blog/CLAUDE.md y blog-ai/CLAUDE.md, identificó la skill marcador-blog-ai junto con las skills generales y de anthropic-skills, y declaró que no había propuesto un campo para ResultadoBusqueda ni abierto los archivos relacionados.
 
 El registro MARCADORES-blog-api.txt muestra que el hook de blog-api registró operaciones Write y Edit, incluidas modificaciones en archivos de blog-ai, mientras que MARCADORES-blog-ai.txt registra la creación de su archivo de prueba, lo que evidencia que cada hook se ejecuta según la configuración del proyecto activo y que el hook de blog-api también puede registrar ediciones realizadas fuera de su repositorio.
