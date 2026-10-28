@@ -220,16 +220,3 @@ No modifiques ningún archivo.
 ```
 
 **Qué salió:** Claude Code confirmó que había añadido el campo fragmentos_coincidentes, de tipo int y con Field(default=1, ge=1). Explicó que eligió ese nombre por criterio propio, siguiendo las convenciones existentes en el archivo, donde los campos utilizan nombres en español y snake_case. También indicó que ninguna instrucción CLAUDE.md había determinado el nombre, ya que la regla de blog-ai no se había cargado automáticamente en la sesión. Aunque el campo cumplía la regla de utilizar nombres en español, esto ocurrió sin que Claude declarase haber aplicado dicha instrucción. Finalmente, volvió a cumplir la REGLA-PADRE y no modificó ningún otro archivo.
-
----
-
-## Prompt 8
-
-**Modelo:** Sonnet 5.5
-**Herramienta:** Claude Code
-
-```
-
-```
-
-**Qué salió:** 
