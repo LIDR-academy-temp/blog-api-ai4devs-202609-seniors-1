@@ -57,6 +57,15 @@ test.group('Contrato fijado con blog-ai', () => {
     assert.include(problemas[0], 'modelo')
   })
 
+  test('acepta la respuesta de GET /indexado/{slug}', async ({ assert }) => {
+    const problemas = await contrato.validarContra('RespuestaIndexado', {
+      slug: 'un-post',
+      indexado: true,
+      fragmentos: 3,
+    })
+    assert.deepEqual(problemas, [])
+  })
+
   test('el esquema pedido tiene que existir en el contrato', async ({ assert }) => {
     const problemas = await contrato.validarContra('EsquemaInventado', {})
     assert.include(problemas[0], 'no define el esquema')

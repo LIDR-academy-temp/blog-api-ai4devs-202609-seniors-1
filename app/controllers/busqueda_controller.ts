@@ -4,7 +4,7 @@ import PostService from '#services/post_service'
 import { consultaValidator } from '#validators/busqueda_validator'
 
 /**
- * Las dos rutas que cruzan el limite entre repositorios. blog-api no sabe de embeddings:
+ * Las rutas que cruzan el limite entre repositorios. blog-api no sabe de embeddings:
  * delega en blog-ai y vuelve a montar la tarjeta de cada resultado con SUS datos,
  * que son la fuente de verdad del blog.
  */
@@ -46,5 +46,17 @@ export default class BusquedaController {
     const posts = await this.posts.paraIndexar()
     const resultado = await this.ia.indexar(posts)
     return { datos: { enviados: posts.length, ...resultado } }
+  }
+
+  /**
+   * Si blog-ai tiene indexado un post. Un borrador o un slug inexistente responden 404
+   * aqui mismo, sin preguntar a blog-ai: no se filtra ni la existencia de un borrador.
+   */
+  async indexado({ params, response }: HttpContext) {
+    const publicos = await this.posts.porSlugs([params.slug])
+    if (!publicos.has(params.slug)) {
+      return response.notFound({ error: 'Post no encontrado' })
+    }
+    return { datos: await this.ia.indexado(params.slug) }
   }
 }
