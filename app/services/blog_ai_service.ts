@@ -30,6 +30,7 @@ export type RespuestaPreguntar = {
   fuentes: FuenteCitada[]
   modelo: string
 }
+export type RespuestaIndexado = { slug: string; indexado: boolean; fragmentos: number }
 export type RespuestaIndexar = {
   indexados: number
   omitidos: number
@@ -53,13 +54,15 @@ export default class BlogAiService {
     return env.get('CONTRATO_ESTRICTO', true) !== false
   }
 
+  /** Sin cuerpo la peticion es un GET; con cuerpo, un POST JSON. */
   private async pedir<T>(ruta: string, cuerpo: unknown, esquema: string): Promise<T> {
+    const conCuerpo = cuerpo !== undefined
     let respuesta: Response
     try {
       respuesta = await fetch(`${this.base}${ruta}`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(cuerpo),
+        method: conCuerpo ? 'POST' : 'GET',
+        headers: conCuerpo ? { 'Content-Type': 'application/json' } : undefined,
+        body: conCuerpo ? JSON.stringify(cuerpo) : undefined,
         signal: AbortSignal.timeout(env.get('BLOG_AI_TIMEOUT_MS', 60_000)),
       })
     } catch (error) {
@@ -94,6 +97,15 @@ export default class BlogAiService {
 
   async preguntar(consulta: string, limite: number): Promise<RespuestaPreguntar> {
     return this.pedir<RespuestaPreguntar>('/preguntar', { consulta, limite }, 'RespuestaPreguntar')
+  }
+
+  // REGLA-FRONTERA: validada
+  async indexado(slug: string): Promise<RespuestaIndexado> {
+    return this.pedir<RespuestaIndexado>(
+      `/indexado/${encodeURIComponent(slug)}`,
+      undefined,
+      'RespuestaIndexado'
+    )
   }
 
   async salud(): Promise<Record<string, unknown>> {

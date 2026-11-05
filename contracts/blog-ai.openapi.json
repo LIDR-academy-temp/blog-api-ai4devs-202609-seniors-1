@@ -213,6 +213,29 @@
         "title": "RespuestaBuscar",
         "type": "object"
       },
+      "RespuestaIndexado": {
+        "properties": {
+          "fragmentos": {
+            "title": "Fragmentos",
+            "type": "integer"
+          },
+          "indexado": {
+            "title": "Indexado",
+            "type": "boolean"
+          },
+          "slug": {
+            "title": "Slug",
+            "type": "string"
+          }
+        },
+        "required": [
+          "slug",
+          "indexado",
+          "fragmentos"
+        ],
+        "title": "RespuestaIndexado",
+        "type": "object"
+      },
       "RespuestaIndexar": {
         "properties": {
           "fragmentos": {
@@ -434,6 +457,46 @@
           }
         },
         "summary": "Busqueda semantica"
+      }
+    },
+    "/indexado/{slug}": {
+      "get": {
+        "description": "Un slug que no esta en el indice no es un error: responde `indexado: false`.",
+        "operationId": "indexado_indexado__slug__get",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "slug",
+            "required": true,
+            "schema": {
+              "title": "Slug",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RespuestaIndexado"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Indica si un post tiene contenido indexado"
       }
     },
     "/indexar": {

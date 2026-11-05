@@ -103,4 +103,11 @@ test.group('Reglas de negocio del blog', (group) => {
     const porTexto = await client.get('/posts?q=tipografia')
     assert.isAtLeast(porTexto.body().datos.length, 1)
   })
+
+  test('regla 1 — el indexado de un borrador responde 404 sin consultar a blog-ai', async ({
+    client,
+  }) => {
+    await client.get(`/posts/${BORRADOR}/indexado`).then((r) => r.assertStatus(404))
+    await client.get('/posts/este-slug-no-existe/indexado').then((r) => r.assertStatus(404))
+  })
 })
